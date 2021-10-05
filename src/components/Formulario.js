@@ -1,6 +1,7 @@
 import react, {Fragment, useState} from "react";
+import uuid from 'uuid/dist/v4';
 
-const Formulario = () => {
+const Formulario = ({crearCita}) => {
 
   // Crear State de Citas
   const [cita, actulizarCita] = useState({
@@ -31,12 +32,23 @@ const Formulario = () => {
       actualizarError(true);
       return;
     }
+    //Eliminar msj previo
+    actualizarError(false);
 
     //Asignar un ID
+    cita.id = uuid();
 
     //Crear la cita
+    crearCita(cita);
 
     //Reiniciar el form
+    actulizarCita({
+      mascota: '',
+      propietario: '',
+      fecha: '',
+      hora: '',
+      sintomas: ''
+    })
   }
 
     return (
@@ -49,9 +61,9 @@ const Formulario = () => {
           <label>Nombre Mascota</label>
           <input
               type="text"
-              name="mascotas"
+              name="mascota"
               className="u-full-width"
-              placeholder="Nombre Mascota"
+              placeholder="Nombre de la mascota"
               onChange={actualizarState}
               value={mascota}
           />
